@@ -165,11 +165,20 @@ function displayMyLibrary() {
     if (document.querySelector("table") != undefined) {
         document.querySelector("table").remove();
     }
+    if (document.querySelector("#noMangaDiv") != undefined) {
+        document.querySelector("#noMangaDiv").remove();
+    }
 
     const table = document.createElement("table");
 
     if (myLibrary.length === 0) {
         table.remove();
+
+        const noMangaDiv = document.createElement("div");
+        noMangaDiv.id = "noMangaDiv";
+        noMangaDiv.textContent = "Nothing to see here. Add some manga!";
+        document.body.appendChild(noMangaDiv);
+
         return;
     }
 
