@@ -17,99 +17,10 @@ function addMangaToLibrary(title, author, chapters, chaptersRead, completed) {
     myLibrary.push(manga);
 }
 
-function displayMyLibrary() {
-
-    if (document.querySelector("table") != undefined) {
-        document.querySelector("table").remove();
-    }
-
-    const table = document.createElement("table");
-    const tbody = document.createElement("tbody");
-
-    const thead = document.createElement("thead");
-    const theadRow = document.createElement("tr");
-    const theadTitle = document.createElement("th");
-    const theadAuthor = document.createElement("th");
-    const theadChapters = document.createElement("th");
-    const theadChaptersRead = document.createElement("th");
-    const theadRead = document.createElement("th");
-
-    theadTitle.textContent = "Title";
-    theadAuthor.textContent = "Author";
-    theadChapters.textContent = "Chapters";
-    theadChaptersRead.textContent = "Chapters Read";
-    theadRead.textContent = "Read";
-
-    thead.appendChild(theadRow);
-    theadRow.appendChild(theadTitle);
-    theadRow.appendChild(theadAuthor);
-    theadRow.appendChild(theadChapters);
-    theadRow.appendChild(theadChaptersRead);
-    theadRow.appendChild(theadRead);
-    table.appendChild(thead);
-
-
-    myLibrary.forEach((manga) => {
-
-        const row = document.createElement("tr");
-        const titleCell = document.createElement("td");
-        const authorCell = document.createElement("td");
-        const chaptersCell = document.createElement("td");
-        const chaptersReadCell = document.createElement("td");
-        const completedCell = document.createElement("td");
-        const deleteButtonCell = document.createElement("td");
-        const deleteButton = document.createElement("button");
-        const toggleReadButtonCell = document.createElement("td");
-        const toggleReadButton = document.createElement("button");
-
-        titleCell.textContent = manga.title;
-        authorCell.textContent = manga.author;
-        chaptersCell.textContent = manga.chapters;
-        chaptersReadCell.textContent = manga.chaptersRead;
-        completedCell.textContent = manga.completed;
-        deleteButton.textContent = "Delete";
-        toggleReadButton.textContent = "Toggle Read";
-
-        // Each delete button has an id of "manga-$"
-        deleteButton.setAttribute("id", `delete-${myLibrary.indexOf(manga)}`);
-        deleteButton.className = "delete";
-
-        toggleReadButton.setAttribute("id", `toggle-read-${myLibrary.indexOf(manga)}`);
-        toggleReadButton.className = "toggleRead";
-
-        row.appendChild(titleCell);
-        row.appendChild(authorCell);
-        row.appendChild(chaptersCell);
-        row.appendChild(chaptersReadCell);
-        row.appendChild(completedCell);
-        deleteButtonCell.appendChild(deleteButton);
-        row.appendChild(deleteButtonCell);
-        toggleReadButtonCell.appendChild(toggleReadButton);
-        row.appendChild(toggleReadButtonCell);
-        tbody.appendChild(row);
-    });
-
-    table.appendChild(tbody);
-    document.body.appendChild(table);
-
-    deleteMangaButtons = document.querySelectorAll(".delete");
-    deleteMangaButtons.forEach((button) => {
-
-        button.addEventListener("click", () => {
-
-            let tempArray = myLibrary.filter((item) => {
-                return myLibrary.indexOf(item) != button.id.substring(button.id.length - 1);
-            })
-
-            myLibrary = tempArray;
-
-            displayMyLibrary();
-        });
-
-    });
-
-}
-
+//
+//
+//
+// Displays a modal that contains a form for adding manga
 addMangaButton.addEventListener("click", () => {
     const dialog = document.createElement("dialog");
     const form = document.createElement("form");
@@ -242,6 +153,135 @@ addMangaButton.addEventListener("click", () => {
 
 });
 
+
+
+//
+//
+//
+// Displays the Manga objects in library in a new table
+function displayMyLibrary() {
+
+
+    if (document.querySelector("table") != undefined) {
+        document.querySelector("table").remove();
+    }
+
+    const table = document.createElement("table");
+
+    if (myLibrary.length === 0) {
+        table.remove();
+        return;
+    }
+
+    const tbody = document.createElement("tbody");
+
+    const thead = document.createElement("thead");
+    const theadRow = document.createElement("tr");
+    const theadTitle = document.createElement("th");
+    const theadAuthor = document.createElement("th");
+    const theadChapters = document.createElement("th");
+    const theadChaptersRead = document.createElement("th");
+    const theadCompleted = document.createElement("th");
+
+    theadTitle.textContent = "Title";
+    theadAuthor.textContent = "Author";
+    theadChapters.textContent = "Chapters";
+    theadChaptersRead.textContent = "Chapters Read";
+    theadCompleted.textContent = "Completed";
+
+    thead.appendChild(theadRow);
+    theadRow.appendChild(theadTitle);
+    theadRow.appendChild(theadAuthor);
+    theadRow.appendChild(theadChapters);
+    theadRow.appendChild(theadChaptersRead);
+    theadRow.appendChild(theadCompleted);
+    table.appendChild(thead);
+
+
+    myLibrary.forEach((manga) => {
+
+        const row = document.createElement("tr");
+        const titleCell = document.createElement("td");
+        const authorCell = document.createElement("td");
+        const chaptersCell = document.createElement("td");
+        const chaptersReadCell = document.createElement("td");
+        const completedCell = document.createElement("td");
+        const deleteButtonCell = document.createElement("td");
+        const deleteButton = document.createElement("button");
+        const toggleReadButtonCell = document.createElement("td");
+        const toggleReadButton = document.createElement("button");
+
+        titleCell.textContent = manga.title;
+        authorCell.textContent = manga.author;
+        chaptersCell.textContent = manga.chapters;
+        chaptersReadCell.textContent = manga.chaptersRead;
+        completedCell.textContent = manga.completed;
+        deleteButton.textContent = "Delete";
+        toggleReadButton.textContent = "Toggle Read";
+
+        // Each delete button has an id of "manga-$"
+        deleteButton.setAttribute("id", `delete-${myLibrary.indexOf(manga)}`);
+        deleteButton.className = "delete";
+
+        toggleReadButton.setAttribute("id", `toggle-completed-${myLibrary.indexOf(manga)}`);
+        toggleReadButton.className = "toggleCompleted";
+
+        row.appendChild(titleCell);
+        row.appendChild(authorCell);
+        row.appendChild(chaptersCell);
+        row.appendChild(chaptersReadCell);
+        row.appendChild(completedCell);
+        deleteButtonCell.appendChild(deleteButton);
+        row.appendChild(deleteButtonCell);
+        toggleReadButtonCell.appendChild(toggleReadButton);
+        row.appendChild(toggleReadButtonCell);
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+    document.body.appendChild(table);
+
+    deleteMangaButtons = document.querySelectorAll(".delete");
+    deleteMangaButtons.forEach((button) => {
+
+        button.addEventListener("click", () => {
+
+            let tempArray = myLibrary.filter((item) => {
+                return myLibrary.indexOf(item) != button.id.substring(button.id.length - 1);
+            })
+
+            myLibrary = tempArray;
+
+            displayMyLibrary();
+
+        });
+
+
+    });
+
+    toggleCompletedButtons = document.querySelectorAll(".toggleCompleted");
+    toggleCompletedButtons.forEach((button) => {
+
+        button.addEventListener("click", () => {
+
+            let valueOfCompletedCell = myLibrary.at(button.id.substring(button.id.length - 1)).completed;
+            console.log(valueOfCompletedCell);
+            if (valueOfCompletedCell == "Yes") {
+                valueOfCompletedCell = "No";
+                myLibrary.at(button.id.substring(button.id.length - 1)).completed = valueOfCompletedCell;
+            } else {
+                valueOfCompletedCell = "Yes";
+                myLibrary.at(button.id.substring(button.id.length - 1)).completed = valueOfCompletedCell;
+            }
+
+            displayMyLibrary();
+        });
+
+    });
+
+}
+
+// Manga to prefill the table
 addMangaToLibrary("Dandadan", "Yukinobu Tatsu", 162, 162, "No");
 addMangaToLibrary("My Hero Academia", "Kohei Horikoshi", 430, 430, "Yes");
 addMangaToLibrary("One Piece", "Eiichiro Oda", 1121, 1, "No");
