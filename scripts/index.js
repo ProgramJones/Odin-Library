@@ -24,7 +24,30 @@ function displayMyLibrary() {
     }
 
     const table = document.createElement("table");
-    document.body.appendChild(table);
+    const tbody = document.createElement("tbody");
+
+    const thead = document.createElement("thead");
+    const theadRow = document.createElement("tr");
+    const theadTitle = document.createElement("th");
+    const theadAuthor = document.createElement("th");
+    const theadChapters = document.createElement("th");
+    const theadChaptersRead = document.createElement("th");
+    const theadRead = document.createElement("th");
+
+    theadTitle.textContent = "Title";
+    theadAuthor.textContent = "Author";
+    theadChapters.textContent = "Chapters";
+    theadChaptersRead.textContent = "Chapters Read";
+    theadRead.textContent = "Read";
+
+    thead.appendChild(theadRow);
+    theadRow.appendChild(theadTitle);
+    theadRow.appendChild(theadAuthor);
+    theadRow.appendChild(theadChapters);
+    theadRow.appendChild(theadChaptersRead);
+    theadRow.appendChild(theadRead);
+    table.appendChild(thead);
+
 
     myLibrary.forEach((manga) => {
 
@@ -36,6 +59,8 @@ function displayMyLibrary() {
         const completedCell = document.createElement("td");
         const deleteButtonCell = document.createElement("td");
         const deleteButton = document.createElement("button");
+        const toggleReadButtonCell = document.createElement("td");
+        const toggleReadButton = document.createElement("button");
 
         titleCell.textContent = manga.title;
         authorCell.textContent = manga.author;
@@ -43,10 +68,14 @@ function displayMyLibrary() {
         chaptersReadCell.textContent = manga.chaptersRead;
         completedCell.textContent = manga.completed;
         deleteButton.textContent = "Delete";
+        toggleReadButton.textContent = "Toggle Read";
 
         // Each delete button has an id of "manga-$"
         deleteButton.setAttribute("id", `delete-${myLibrary.indexOf(manga)}`);
         deleteButton.className = "delete";
+
+        toggleReadButton.setAttribute("id", `toggle-read-${myLibrary.indexOf(manga)}`);
+        toggleReadButton.className = "toggleRead";
 
         row.appendChild(titleCell);
         row.appendChild(authorCell);
@@ -55,8 +84,13 @@ function displayMyLibrary() {
         row.appendChild(completedCell);
         deleteButtonCell.appendChild(deleteButton);
         row.appendChild(deleteButtonCell);
-        table.appendChild(row);
+        toggleReadButtonCell.appendChild(toggleReadButton);
+        row.appendChild(toggleReadButtonCell);
+        tbody.appendChild(row);
     });
+
+    table.appendChild(tbody);
+    document.body.appendChild(table);
 
     deleteMangaButtons = document.querySelectorAll(".delete");
     deleteMangaButtons.forEach((button) => {
