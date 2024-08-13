@@ -1,6 +1,7 @@
 const addMangaButton = document.querySelector("#add-manga");
+let deleteMangaButtons = null;
 
-const myLibrary = [];
+let myLibrary = [];
 
 function Manga(title, author, chapters, chaptersRead, completed) {
     this.title = title;
@@ -33,26 +34,47 @@ function displayMyLibrary() {
         const chaptersCell = document.createElement("td");
         const chaptersReadCell = document.createElement("td");
         const completedCell = document.createElement("td");
+        const deleteButtonCell = document.createElement("td");
+        const deleteButton = document.createElement("button");
 
         titleCell.textContent = manga.title;
         authorCell.textContent = manga.author;
         chaptersCell.textContent = manga.chapters;
         chaptersReadCell.textContent = manga.chaptersRead;
         completedCell.textContent = manga.completed;
+        deleteButton.textContent = "Delete";
+
+        // Each delete button has an id of "manga-$"
+        deleteButton.setAttribute("id", `delete-${myLibrary.indexOf(manga)}`);
+        deleteButton.className = "delete";
 
         row.appendChild(titleCell);
         row.appendChild(authorCell);
         row.appendChild(chaptersCell);
         row.appendChild(chaptersReadCell);
         row.appendChild(completedCell);
+        deleteButtonCell.appendChild(deleteButton);
+        row.appendChild(deleteButtonCell);
         table.appendChild(row);
     });
 
-}
+    deleteMangaButtons = document.querySelectorAll(".delete");
+    deleteMangaButtons.forEach((button) => {
 
-addMangaToLibrary("Dandadan", "Yukinobu Tatsu", 162, 162, "No");
-addMangaToLibrary("My Hero Academia", "Kohei Horikoshi", 430, 430, "Yes");
-addMangaToLibrary("One Piece", "Eiichiro Oda", 1121, 1, "No");
+        button.addEventListener("click", () => {
+
+            let tempArray = myLibrary.filter((item) => {
+                return myLibrary.indexOf(item) != button.id.substring(button.id.length - 1);
+            })
+
+            myLibrary = tempArray;
+
+            displayMyLibrary();
+        });
+
+    });
+
+}
 
 addMangaButton.addEventListener("click", () => {
     const dialog = document.createElement("dialog");
@@ -179,13 +201,16 @@ addMangaButton.addEventListener("click", () => {
 
             dialog.close();
             dialog.remove();
-
         } else {
             titleInput.reportValidity();
         }
     });
 
 });
+
+addMangaToLibrary("Dandadan", "Yukinobu Tatsu", 162, 162, "No");
+addMangaToLibrary("My Hero Academia", "Kohei Horikoshi", 430, 430, "Yes");
+addMangaToLibrary("One Piece", "Eiichiro Oda", 1121, 1, "No");
 
 displayMyLibrary();
 
