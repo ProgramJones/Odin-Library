@@ -2,15 +2,16 @@ const addMangaButton = document.querySelector("#add-manga");
 
 const myLibrary = [];
 
-function Manga(title, author, chapters, chaptersRead) {
+function Manga(title, author, chapters, chaptersRead, completed) {
     this.title = title;
     this.author = author;
     this.chapters = chapters;
     this.chaptersRead = chaptersRead;
+    this.completed = completed;
 }
 
-function addMangaToLibrary(title, author, chapters, chaptersRead) {
-    let manga = new Manga(title, author, chapters, chaptersRead);
+function addMangaToLibrary(title, author, chapters, chaptersRead, completed) {
+    let manga = new Manga(title, author, chapters, chaptersRead, completed);
 
     myLibrary.push(manga);
 }
@@ -31,24 +32,27 @@ function displayMyLibrary() {
         const authorCell = document.createElement("td");
         const chaptersCell = document.createElement("td");
         const chaptersReadCell = document.createElement("td");
+        const completedCell = document.createElement("td");
 
         titleCell.textContent = manga.title;
         authorCell.textContent = manga.author;
         chaptersCell.textContent = manga.chapters;
         chaptersReadCell.textContent = manga.chaptersRead;
+        completedCell.textContent = manga.completed;
 
         row.appendChild(titleCell);
         row.appendChild(authorCell);
         row.appendChild(chaptersCell);
         row.appendChild(chaptersReadCell);
+        row.appendChild(completedCell);
         table.appendChild(row);
     });
 
 }
 
-addMangaToLibrary("Dandadan", "Yukinobu Tatsu", 162, 162);
-addMangaToLibrary("My Hero Academia", "Kohei Horikoshi", 430, 430);
-addMangaToLibrary("One Piece", "Eiichiro Oda", 1121, 1);
+addMangaToLibrary("Dandadan", "Yukinobu Tatsu", 162, 162, "No");
+addMangaToLibrary("My Hero Academia", "Kohei Horikoshi", 430, 430, "Yes");
+addMangaToLibrary("One Piece", "Eiichiro Oda", 1121, 1, "No");
 
 addMangaButton.addEventListener("click", () => {
     const dialog = document.createElement("dialog");
@@ -104,6 +108,40 @@ addMangaButton.addEventListener("click", () => {
     chaptersReadListItem.appendChild(chaptersReadInput);
     ul.appendChild(chaptersReadListItem);
 
+    // The next three sections are just for the two radio inputs
+    const completedListItem = document.createElement("li");
+    const fieldset = document.createElement("fieldset");
+    const legend = document.createElement("legend");
+    legend.textContent = "Did you finish the manga?";
+    fieldset.appendChild(legend);
+    completedListItem.appendChild(fieldset);
+
+
+    const completedTrueLabel = document.createElement("label");
+    completedTrueLabel.setAttribute("for", "true");
+    completedTrueLabel.textContent = "Yes";
+    const completedTrueInput = document.createElement("input");
+    completedTrueInput.setAttribute("type", "radio");
+    completedTrueInput.setAttribute("id", "true");
+    completedTrueInput.setAttribute("name", "completed");
+    completedTrueInput.setAttribute("value", "Yes");
+    fieldset.appendChild(completedTrueLabel);
+    fieldset.appendChild(completedTrueInput);
+
+
+    const completedFalseLabel = document.createElement("label");
+    completedFalseLabel.setAttribute("for", "false");
+    completedFalseLabel.textContent = "No";
+    const completedFalseInput = document.createElement("input");
+    completedFalseInput.setAttribute("type", "radio");
+    completedFalseInput.setAttribute("id", "false");
+    completedFalseInput.setAttribute("name", "completed");
+    completedFalseInput.setAttribute("value", "No");
+    fieldset.appendChild(completedFalseLabel);
+    fieldset.appendChild(completedFalseInput);
+
+    ul.appendChild(completedListItem);
+
     const confirmButton = document.createElement("button");
     confirmButton.textContent = "Add";
     const cancelButton = document.createElement("button");
@@ -134,8 +172,9 @@ addMangaButton.addEventListener("click", () => {
             const inputtedAuthor = authorInput.value;
             const inputtedChapters = chaptersInput.value;
             const inputtedChaptersRead = chaptersReadInput.value;
+            const completedButtonValue = document.querySelector("input[name=completed]:checked").value;
 
-            addMangaToLibrary(inputtedTitle, inputtedAuthor, inputtedChapters, inputtedChaptersRead);
+            addMangaToLibrary(inputtedTitle, inputtedAuthor, inputtedChapters, inputtedChaptersRead, completedButtonValue);
             displayMyLibrary();
 
             dialog.close();
