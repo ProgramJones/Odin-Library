@@ -175,3 +175,23 @@ form button {
     justify-self: center;
     justify-content: center;
 }
+
+
+/************/
+
+#noMangaDiv {
+    border: var(--standard-border);
+    height: 100px;
+    border-radius: 15px;
+    position: relative;
+    overflow-x: scroll;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#noMangaDiv p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    height: fit-content;
+}

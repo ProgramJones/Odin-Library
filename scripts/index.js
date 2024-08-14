@@ -182,7 +182,11 @@ function displayMyLibrary() {
 
         const noMangaDiv = document.createElement("div");
         noMangaDiv.id = "noMangaDiv";
-        noMangaDiv.textContent = "Nothing to see here. Add some manga!";
+
+        const noMangaDivTitle = document.createElement("p");
+        noMangaDivTitle.textContent = "Click 'Add Manga' to fill this table";
+
+        noMangaDiv.appendChild(noMangaDivTitle);
         document.body.appendChild(noMangaDiv);
 
         return;
@@ -304,10 +308,10 @@ function displayMyLibrary() {
 
 }
 
-// Manga to prefill the table for testing
-addMangaToLibrary("Dandadan", "Yukinobu Tatsu", 162, 162, "No");
-addMangaToLibrary("My Hero Academia", "Kohei Horikoshi", 430, 430, "Yes");
-addMangaToLibrary("One Piece", "Eiichiro Oda", 1121, 1, "No");
+// // Manga to prefill the table for testing
+// addMangaToLibrary("Dandadan", "Yukinobu Tatsu", 162, 162, "No");
+// addMangaToLibrary("My Hero Academia", "Kohei Horikoshi", 430, 430, "Yes");
+// addMangaToLibrary("One Piece", "Eiichiro Oda", 1121, 1, "No");
 
 displayMyLibrary();
 
