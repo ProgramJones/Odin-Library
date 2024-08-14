@@ -191,12 +191,17 @@ function displayMyLibrary() {
     const theadChapters = document.createElement("th");
     const theadChaptersRead = document.createElement("th");
     const theadCompleted = document.createElement("th");
+    const theadActions = document.createElement("th");
 
     theadTitle.textContent = "Title";
     theadAuthor.textContent = "Author";
     theadChapters.textContent = "Chapters";
-    theadChaptersRead.textContent = "Chapters Read";
+    theadChaptersRead.textContent = "Read";
     theadCompleted.textContent = "Completed";
+    theadActions.textContent = "Actions";
+
+    theadActions.setAttribute("colspan", "2");
+    theadActions.id = "theadActions";
 
     thead.appendChild(theadRow);
     theadRow.appendChild(theadTitle);
@@ -204,6 +209,7 @@ function displayMyLibrary() {
     theadRow.appendChild(theadChapters);
     theadRow.appendChild(theadChaptersRead);
     theadRow.appendChild(theadCompleted);
+    theadRow.appendChild(theadActions);
     table.appendChild(thead);
 
 
@@ -228,7 +234,9 @@ function displayMyLibrary() {
         deleteButton.textContent = "Delete";
         toggleReadButton.textContent = "Toggle Read";
 
-        // Each delete button has an id of "manga-$"
+        chaptersCell.className = "chapters";
+        chaptersReadCell.className = "chaptersRead"
+        // Each delete button has an id of "delete-$"
         deleteButton.setAttribute("id", `delete-${myLibrary.indexOf(manga)}`);
         deleteButton.className = "delete";
 
@@ -248,7 +256,13 @@ function displayMyLibrary() {
     });
 
     table.appendChild(tbody);
-    document.body.appendChild(table);
+    let tableContainer = document.createElement("div");
+    tableContainer.id = "tableContainer";
+    tableContainer.appendChild(table);
+    document.body.appendChild(tableContainer);
+
+    document.body.appendChild(tableContainer);
+
 
     deleteMangaButtons = document.querySelectorAll(".delete");
     deleteMangaButtons.forEach((button) => {
@@ -290,7 +304,7 @@ function displayMyLibrary() {
 
 }
 
-// Manga to prefill the table
+// Manga to prefill the table for testing
 addMangaToLibrary("Dandadan", "Yukinobu Tatsu", 162, 162, "No");
 addMangaToLibrary("My Hero Academia", "Kohei Horikoshi", 430, 430, "Yes");
 addMangaToLibrary("One Piece", "Eiichiro Oda", 1121, 1, "No");
