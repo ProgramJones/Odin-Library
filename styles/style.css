@@ -1,6 +1,7 @@
 :root {
     font-family: Arial, Helvetica, sans-serif;
     margin: 16px;
+    --standard-border: 1px solid rgba(128, 128, 128, 0.515);
 }
 
 h1 {
@@ -18,7 +19,7 @@ button:hover {
 button {
     border-radius: 5px;
     border: none;
-    padding: 8px;
+    padding: 8px 16px;
     background-color: #3185FC;
     color: white;
     /* letter-spacing: .05rem; */
@@ -28,7 +29,8 @@ button#add-manga {
     margin-bottom: 48px;
 }
 
-button.delete {
+button.delete,
+#cancelButton {
     background-color: #E84855;
 }
 
@@ -36,15 +38,9 @@ button.toggleCompleted {
     background-color: #2EC4B6;
 }
 
-form button {
-    margin: 8px;
-}
+
 
 /*********************/
-
-#tableContainer {
-    overflow-x: auto;
-}
 
 table {
     border-spacing: 0;
@@ -84,7 +80,7 @@ tr th:first-child {
 td,
 th {
     text-align: left;
-    border: 1px solid rgba(128, 128, 128, 0.515);
+    border: var(--standard-border);
     padding: 8px 16px;
     background-color: white;
 }
@@ -97,16 +93,16 @@ td {
 }
 
 tbody tr:last-child td {
-    border-bottom: 1px solid rgba(128, 128, 128, 0.515);
+    border-bottom: var(--standard-border);
 
 }
 
 tr td:first-child {
-    border-left: 1px solid rgba(128, 128, 128, 0.515);
+    border-left: var(--standard-border);
 }
 
 tr td:last-child {
-    border-right: 1px solid rgba(128, 128, 128, 0.515);
+    border-right: var(--standard-border);
 
 }
 
@@ -118,6 +114,64 @@ tr th:not(th:first-child) {
     border-left: none;
 }
 
-#theadActions {
-    /* text-align: center; */
+
+dialog {
+    padding: 32px;
+    width: 600px;
+    margin: auto;
+}
+
+input {
+    border: 1px solid grey;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+fieldset {
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+input[type="radio"] {
+    margin-right: 32px;
+    margin-left: 8px;
+}
+
+ul {
+    display: grid;
+    grid-template: 50px 50px 1fr / 200px 200px;
+    grid-template-areas:
+        "title author"
+        "chapters chaptersRead"
+        "completed completed";
+    gap: 32px;
+    justify-content: center;
+}
+
+li {
+    list-style: none;
+    /* width: 400px; */
+}
+
+ul li:last-child {
+    grid-area: completed;
+    margin-bottom: 32px;
+}
+
+form {
+    display: grid;
+    grid-template-rows: auto 1fr / 1fr;
+    flex-direction: column;
+}
+
+form button {
+    margin: 8px;
+    align-self: center;
+}
+
+#formButtonsDiv {
+    width: 50%;
+    display: flex;
+    justify-self: center;
+    justify-content: center;
 }

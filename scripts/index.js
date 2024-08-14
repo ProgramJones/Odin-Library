@@ -109,14 +109,20 @@ addMangaButton.addEventListener("click", () => {
 
     ul.appendChild(completedListItem);
 
+    const formButtonsDiv = document.createElement("div");
     const confirmButton = document.createElement("button");
     confirmButton.textContent = "Add";
     const cancelButton = document.createElement("button");
+    cancelButton.id = "cancelButton";
     cancelButton.textContent = "Cancel";
 
+    formButtonsDiv.id = "formButtonsDiv";
+
+    formButtonsDiv.appendChild(confirmButton);
+    formButtonsDiv.appendChild(cancelButton);
+
     form.appendChild(ul);
-    form.appendChild(cancelButton);
-    form.appendChild(confirmButton);
+    form.appendChild(formButtonsDiv);
 
     dialog.appendChild(form);
 
@@ -256,13 +262,7 @@ function displayMyLibrary() {
     });
 
     table.appendChild(tbody);
-    let tableContainer = document.createElement("div");
-    tableContainer.id = "tableContainer";
-    tableContainer.appendChild(table);
-    document.body.appendChild(tableContainer);
-
-    document.body.appendChild(tableContainer);
-
+    document.body.appendChild(table);
 
     deleteMangaButtons = document.querySelectorAll(".delete");
     deleteMangaButtons.forEach((button) => {
